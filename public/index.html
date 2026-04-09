@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="DownX – Instant media downloader with FFmpeg processing for HD quality">
+  <meta name="theme-color" content="#ff6a00">
+  <title>DownX | Instant Media Downloader</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="particles-bg"></div>
+  <div class="app-container">
+    <!-- Header with Logo, Sologon, and Navigation -->
+    <header class="main-header">
+      <div class="logo-section">
+        <div class="logo" id="homeLogo">
+          <img src="images/logo.png" alt="DownX" class="logo-img" id="dynamicLogo" onerror="this.style.display='none'">
+          <span class="down-text">Down</span><span class="x-text">X</span>
+        </div>
+        <div class="sologon">instant media Link downloader</div>
+      </div>
+      <div class="desktop-nav">
+        <a href="#" class="nav-link" id="homeNavLink">Home</a>
+        <a href="#" class="nav-link" id="historyNavLink">History</a>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </header>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-section">
+          <div class="sidebar-logo">
+            <img src="images/logo.png" alt="DownX" class="sidebar-logo-img" onerror="this.style.display='none'">
+            <span class="sidebar-down-text">Down</span><span class="sidebar-x-text">X</span>
+          </div>
+          <div class="sidebar-sologon">instant media Link downloader</div>
+        </div>
+        <button class="sidebar-close" id="sidebarCloseBtn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="sidebar-nav">
+        <a href="#" class="sidebar-nav-link" id="sidebarHomeLink">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <a href="#" class="sidebar-nav-link" id="sidebarHistoryLink">
+          <i class="fas fa-history"></i> History
+        </a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-content">
+          <span>Developed by -</span>
+          <a href="http://obaidshaikh.vercel.app/" target="_blank" rel="noopener noreferrer" class="sidebar-footer-link">
+            OBAIDULLAH SHAIKH <i class="fas fa-arrow-up-right-from-squares"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Hero Section -->
+    <section id="heroSection" class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">⚡ Universal Downloader</div>
+        <h1 class="hero-title">
+          DOWNLOAD <span class="gradient-text">ANYTHING</span>
+        </h1>
+        <p class="hero-subtitle">
+          HD Quality • MP3 Audio • Multi Platforms
+        </p>
+        <div class="input-container">
+          <div class="url-input-wrapper">
+            <input 
+              type="text" 
+              id="urlInput" 
+              class="url-input" 
+              placeholder="Paste YouTube, Instagram, Pinterest, Twitter URL..."
+              autocomplete="off"
+            >
+            <button id="fetchBtn" class="fetch-btn">
+              <span class="btn-text">Fetch Media</span>
+              <span class="btn-icon">→</span>
+            </button>
+          </div>
+          <div class="supported-platforms">
+            <span class="platform-tag">YouTube</span>
+            <span class="platform-tag">Instagram</span>
+            <span class="platform-tag">Facebook</span>
+            <span class="platform-tag">Twitter/X</span>
+            <span class="platform-tag">Pinterest</span>
+            <!-- <span class="platform-tag">Vimeo</span> -->
+            <span class="platform-tag">+ More</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="resultsSection" class="results-section" style="display: none;">
+      <div class="results-container">
+        <div class="media-preview">
+          <div class="thumbnail-container">
+            <img id="thumbnail" class="thumbnail" alt="Media thumbnail">
+            <div id="duration" class="duration-badge"></div>
+            <div id="qualityBadge" class="quality-badge">HD Available</div>
+          </div>
+          <div class="media-info">
+            <h2 id="title" class="media-title"></h2>
+            <p id="uploader" class="media-uploader"></p>
+            <p id="description" class="media-description"></p>
+          </div>
+        </div>
+
+        <div class="player-section">
+          <div class="player-container">
+            <video id="previewPlayer" class="preview-player" controls style="display: none;">
+              <source id="videoSource" src="">
+            </video>
+            <audio id="previewAudio" class="preview-audio" controls style="display: none;"></audio>
+          </div>
+        </div>
+
+        <div class="download-section">
+          <div class="quality-selector">
+            <label for="qualitySelect" class="quality-label">Select Quality / Format</label>
+            <select id="qualitySelect" class="quality-select">
+              <option value="">Select quality</option>
+            </select>
+            <div id="fileSize" class="file-size"></div>
+            <div id="qualityInfo" class="quality-info"></div>
+          </div>
+
+          <div class="action-buttons">
+            <button id="playPreviewBtn" class="play-preview-btn" disabled>
+              <i class="fas fa-play"></i> Play Preview
+            </button>
+            <button id="downloadVideoBtn" class="action-btn primary-btn" disabled>
+              <i class="fas fa-video"></i> Download HD Video
+            </button>
+            <button id="downloadMp3Btn" class="action-btn mp3-btn" disabled>
+              <i class="fas fa-music"></i> Download MP3 Audio
+            </button>
+          </div>
+          <div class="ffmpeg-note">
+            <i class="fas fa-cogs"></i> Processed with HD quality & audio extraction
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History Page -->
+    <section id="historySection" class="history-page" style="display: none;">
+      <div class="history-page-container">
+        <div class="history-page-header">
+          <h2><i class="fas fa-history"></i> Recent Downloads</h2>
+          <div class="history-header-buttons">
+            <button id="closeHistoryBtn" class="close-history-btn">
+              <i class="fas fa-times"></i> Close
+            </button>
+            <button id="clearHistoryPageBtn" class="clear-history-btn">Clear All</button>
+          </div>
+        </div>
+        <div id="historyPageList" class="history-page-list">
+          <div class="empty-history-page">No recent downloads. Paste a link to start.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Install App Banner -->
+    <div id="installBanner" class="install-banner hidden">
+      <div class="install-banner-content">
+        <div class="install-icon"><i class="fas fa-download"></i></div>
+        <div class="install-text">
+          <strong>Install DownX App</strong>
+          <span>Install for faster access and offline support</span>
+        </div>
+        <button id="installBtn" class="install-action-btn">Install</button>
+        <button id="closeInstallBtn" class="install-close-btn"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+      <div class="loader-wrapper">
+        <div class="beautiful-loader">
+          <div class="loader-ring"></div>
+          <div class="loader-ring-center"></div>
+        </div>
+        <p class="loading-text">Processing with FFmpeg...</p>
+        <div class="loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" style="display: none;">
+      <span class="toast-message"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="thin-footer desktop-footer">
+      <div class="footer-content">
+        <span class="footer-text">Developed by -</span>
+        <a href="http://obaidshaikh.vercel.app/" target="_blank" rel="noopener noreferrer" class="footer-link colorful">
+          OBAIDULLAH SHAIKH <i class="fas fa-arrow-up-right-from-squares"></i>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js" ></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.log('ServiceWorker failed'));
+      });
+    }
+
+    let deferredPrompt;
+    const installBanner = document.getElementById('installBanner');
+    const installBtn = document.getElementById('installBtn');
+    const closeInstallBtn = document.getElementById('closeInstallBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBanner.classList.remove('hidden');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      installBanner.classList.add('hidden');
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      }
+    });
+
+    closeInstallBtn.addEventListener('click', () => {
+      installBanner.classList.add('hidden');
+      localStorage.setItem('installBannerDismissed', 'true');
+    });
+
+    if (localStorage.getItem('installBannerDismissed') === 'true') {
+      installBanner.classList.add('hidden');
+    }
+
+    window.addEventListener('appinstalled', () => {
+      if (typeof showToast === 'function') showToast('DownX App installed successfully!', 'success');
+      installBanner.classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
