@@ -1,9 +1,7 @@
 // ========== FOR RENDER DEPLOYMENT ==========
 // 👇 ADD YOUR VERCEL FRONTEND URL HERE
 const ALLOWED_ORIGINS = [
-    'https://downx-web.vercel.app/',  // CHANGE THIS LINE
-    'http://localhost:3000',
-    'http://localhost:5500'
+    'https://downx-web.vercel.app', // ✅ no slash
 ];
 // ===========================================
 
